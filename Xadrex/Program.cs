@@ -1,12 +1,15 @@
 ﻿using System;
+using Xadrex.Board;
 
 namespace Xadrex
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
-            Console.WriteLine("Hello World!");
+            Position P;
+            P = new Position(3, 4);
+            Console.WriteLine($"Position: {P}");
         }
     }
 }
