@@ -11,7 +11,7 @@ namespace Xadrex.board
     {
         public int Lines { get; set; }
         public int Columns { get; set; }
-        private readonly Piece[,] pieces;
+        private Piece[,] pieces;
 
         public Board(int lines, int columns)
         {
@@ -41,7 +41,16 @@ namespace Xadrex.board
                 throw new BoardException("Já existe uma peça nessa posição!");
             pieces[position.Line, position.Column] = piece;
             piece.Position = position;
-        }   
+        }
+        public Piece RemovePiece(Position position)
+        {
+            if (Piece(position) == null)
+                return null;
+            Piece piece = Piece(position);
+            piece.Position = null;
+            pieces[position.Line, position.Column] = null;
+            return piece;
+        }
         public bool PositionValidate(Position position)
         {
             if (position.Line < 0 || position.Line >= Lines || position.Column < 0 || position.Column >= Columns)

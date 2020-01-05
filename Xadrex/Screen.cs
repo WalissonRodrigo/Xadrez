@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Xadrex.board;
+using Xadrex.chess;
 
 namespace Xadrex
 {
@@ -25,6 +26,14 @@ namespace Xadrex
                 Console.WriteLine();
             }
             Console.Write("  a b c d e f g h");
+        }
+        
+        public static PositionChess ReadPositionChess()
+        {
+            string pos = Console.ReadLine();
+            char column = pos[0];
+            int line = int.Parse(pos[1].ToString());
+            return new PositionChess(column, line);
         }
 
         public static void PrintPiece(Piece piece)

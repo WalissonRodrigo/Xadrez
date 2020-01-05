@@ -21,5 +21,10 @@ namespace Xadrex.board
             Board = board;
             QtdMoves = 0;
         }
+
+        public void AddMoves()
+        {
+            QtdMoves++;
+        }
     }
 }
