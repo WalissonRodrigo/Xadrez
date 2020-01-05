@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Xadrex.Board
+namespace Xadrex.board
 {
+    /// <summary>
+    /// Posição de uma Peça no Tabuleiro
+    /// </summary>
     class Position
     {
         public int line { get; set; }
