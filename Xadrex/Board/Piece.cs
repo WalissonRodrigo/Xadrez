@@ -9,17 +9,17 @@ namespace Xadrex.board
     /// </summary>
     class Piece
     {
-        public Position position { get; set; }
-        public Color color { get; set; }
-        public int qtdMoves { get; protected set; }
-        public Board board { get; protected set; }
+        public Position Position { get; set; }
+        public Color Color { get; set; }
+        public int QtdMoves { get; protected set; }
+        public Board Board { get; protected set; }
 
         public Piece(Position position, Color color, Board board)
         {
-            this.position = position;
-            this.color = color;
-            this.board = board;
-            qtdMoves = 0;
+            Position = position;
+            Color = color;
+            Board = board;
+            QtdMoves = 0;
         }
     }
 }

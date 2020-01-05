@@ -9,15 +9,20 @@ namespace Xadrex.board
     /// </summary>
     class Board
     {
-        public int lines { get; set; }
-        public int columns { get; set; }
-        private Piece[,] pieces;
+        public int Lines { get; set; }
+        public int Columns { get; set; }
+        private readonly Piece[,] pieces;
 
         public Board(int lines, int columns)
         {
-            this.lines = lines;
-            this.columns = columns;
-            pieces = new Piece[this.lines, this.columns];
+            this.Lines = lines;
+            this.Columns = columns;
+            pieces = new Piece[Lines, Columns];
+        }
+
+        public Piece Piece(int line, int column)
+        {
+            return pieces[line, column];
         }
     }
 }
