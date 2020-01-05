@@ -7,7 +7,7 @@ namespace Xadrex.board
     /// <summary>
     /// Posição de uma Peça no Tabuleiro
     /// </summary>
-    class Position
+    public class Position
     {
         public int Line { get; set; }
         public int Column { get; set; }

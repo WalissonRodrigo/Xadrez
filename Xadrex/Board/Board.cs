@@ -7,7 +7,7 @@ namespace Xadrex.board
     /// <summary>
     /// Tabuleiro para Jogo de Xadrex ou outros jogos.
     /// </summary>
-    class Board
+    public class Board
     {
         public int Lines { get; set; }
         public int Columns { get; set; }
@@ -23,6 +23,12 @@ namespace Xadrex.board
         public Piece Piece(int line, int column)
         {
             return pieces[line, column];
+        }
+
+        public void AddPiece(Piece piece, Position position)
+        {
+            pieces[position.Line, position.Column] = piece;
+            piece.Position = position;
         }
     }
 }

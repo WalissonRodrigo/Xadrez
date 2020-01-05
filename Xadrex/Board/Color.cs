@@ -7,14 +7,14 @@ namespace Xadrex.board
     /// <summary>
     /// Cor das Peças do Tabuleiro
     /// </summary>
-    enum Color
+    public enum Color
     {
-        Branco,
-        Preto,
-        Amarelo,
-        Azul,
-        Vermelho,
-        Verde,
-        Laranja
+        White,
+        Black,
+        Yellow,
+        Blue,
+        Red,
+        Green,
+        Orange
     }
 }
