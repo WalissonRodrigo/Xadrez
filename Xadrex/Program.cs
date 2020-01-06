@@ -17,11 +17,20 @@ namespace Xadrex
                 {
                     Console.Clear();
                     Screen.PrintBoard(match.Board);
+                   
                     Console.WriteLine();
-                    Console.Write("Digite a origem da jogada: ");
+                    Console.Write("Origem: ");
                     Position start = Screen.ReadPositionChess().ToPosition();
-                    Console.Write("Digite o destino da jogada: ");
+
+                    bool[,] possiblesMoves = match.Board.Piece(start).PossibleMoves();
+
+                    Console.Clear();
+                    Screen.PrintBoard(match.Board, possiblesMoves);
+
+                    Console.WriteLine();
+                    Console.Write("Destino: ");
                     Position end = Screen.ReadPositionChess().ToPosition();
+
                     match.Move(start, end);
                 }
 

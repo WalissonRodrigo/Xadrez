@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using Xadrex.board;
 
 namespace Xadrex.chess
@@ -10,6 +8,11 @@ namespace Xadrex.chess
         public Queen(Board board, Color color) : base(color, board)
         {
 
+        }
+
+        public override bool[,] PossibleMoves()
+        {
+            throw new NotImplementedException();
         }
 
         public override string ToString()
