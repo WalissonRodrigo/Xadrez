@@ -1,10 +1,13 @@
-﻿using Xadrex.board;
+﻿using Xadrez.Board;
 
-namespace Xadrex.chess
+namespace Xadrez.Chess
 {
+    /// <summary>
+    /// Peça Bispo. Pode mover em diagonais.
+    /// </summary>
     public class Bishop : Piece
     {
-        public Bishop(Board board, Color color) : base(color, board)
+        public Bishop(Board.Board board, Color color) : base(color, board)
         {
 
         }

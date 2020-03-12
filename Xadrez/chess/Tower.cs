@@ -1,11 +1,14 @@
 ﻿using System;
-using Xadrex.board;
+using Xadrez.Board;
 
-namespace Xadrex.chess
+namespace Xadrez.Chess
 {
+    /// <summary>
+    /// Peça Torre. Anda em linhas retas
+    /// </summary>
     public class Tower : Piece
     {
-        public Tower(Board board, Color color) : base(color, board)
+        public Tower(Board.Board board, Color color) : base(color, board)
         {
 
         }
@@ -17,45 +20,44 @@ namespace Xadrex.chess
         public override bool[,] PossibleMoves()
         {
             bool[,] matrix = new bool[Board.Lines, Board.Columns];
-            Position pos = new Position(0,0);
+            Position pos = new Position(0, 0);
             //up
-            pos.DefineValue(pos.Line - 1, pos.Column);
+            pos.DefineValue(Position.Line - 1, Position.Column);
             while (Board.PositionValidate(pos) && CanMove(pos))
             {
                 matrix[pos.Line, pos.Column] = true;
                 if (Board.Piece(pos) != null && Board.Piece(pos).Color != Color)
                     break;
-                pos.Line = pos.Line - 1;
+                pos.Line -= 1;
             }
-
             //down
-            pos.DefineValue(pos.Line + 1, pos.Column);
+            pos.DefineValue(Position.Line + 1, Position.Column);
             while (Board.PositionValidate(pos) && CanMove(pos))
             {
                 matrix[pos.Line, pos.Column] = true;
                 if (Board.Piece(pos) != null && Board.Piece(pos).Color != Color)
                     break;
-                pos.Line = pos.Line + 1;
+                pos.Line += 1;
             }
             //right
-            pos.DefineValue(pos.Line, pos.Column + 1);
+            pos.DefineValue(Position.Line, Position.Column + 1);
             while (Board.PositionValidate(pos) && CanMove(pos))
             {
                 matrix[pos.Line, pos.Column] = true;
                 if (Board.Piece(pos) != null && Board.Piece(pos).Color != Color)
                     break;
-                pos.Column = pos.Column + 1;
+                pos.Column += 1;
             }
             //left
-            pos.DefineValue(pos.Line, pos.Column - 1);
+            pos.DefineValue(Position.Line, Position.Column - 1);
             while (Board.PositionValidate(pos) && CanMove(pos))
             {
                 matrix[pos.Line, pos.Column] = true;
                 if (Board.Piece(pos) != null && Board.Piece(pos).Color != Color)
                     break;
-                pos.Column = pos.Column-1;
+                pos.Column -= 1;
             }
-            
+
             return matrix;
         }
 

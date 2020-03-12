@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Xadrex.board;
+using Xadrez.Board;
 
-namespace Xadrex.chess
+namespace Xadrez.Chess
 {
     /// <summary>
-    /// Classe para Converter a posição do tabuleiro físico de xadrex para as posições da matrix da classe de posição
+    /// Classe para Converter a posição do tabuleiro físico de xadrex 
+    /// para as posições da matrix da classe de posição
     /// </summary>
     class PositionChess
     {

@@ -1,11 +1,14 @@
 ﻿using System;
-using Xadrex.board;
+using Xadrez.Board;
 
-namespace Xadrex.chess
+namespace Xadrez.Chess
 {
+    /// <summary>
+    /// Peça Rainha. Pode mover em linhas retas ou diagonais.
+    /// </summary>
     public class Queen : Piece
     {
-        public Queen(Board board, Color color) : base(color, board)
+        public Queen(Board.Board board, Color color) : base(color, board)
         {
 
         }

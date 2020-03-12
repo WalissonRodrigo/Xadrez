@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Xadrex.board
+﻿namespace Xadrez.Board
 {
     /// <summary>
-    /// Posição de uma Peça no Tabuleiro
+    /// Posição de uma Peça qualquer do Xadrez
     /// </summary>
     public class Position
     {
