@@ -35,9 +35,9 @@ namespace Xadrez.Chess
         /// </summary>
         /// <param name="start"></param>
         /// <param name="end"></param>
-        public void Move(Position start, Position end)
+        public void PlayerValidTurn(Position start, Position end)
         {
-            Piece pieceCathed = MovePiece(start, end);
+            Piece pieceCathed = ExecuteMovePiece(start, end);
 
             if (PlayerInXeque(CurrentPlayer))
             {
@@ -49,14 +49,17 @@ namespace Xadrez.Chess
             else
                 Xeque = false;
 
-            ChangeTurn();
+            if (PlayerInXequeMate(ColorEnemy(CurrentPlayer)))
+                Finish = true;
+            else
+                ChangeTurn();
         }
         /// <summary>
         /// Recebe a posição de inicial e final a ser movimentada
         /// </summary>
         /// <param name="start"></param>
         /// <param name="end"></param>
-        private Piece MovePiece(Position start, Position end)
+        private Piece ExecuteMovePiece(Position start, Position end)
         {
             Piece piece = Board.RemovePiece(start);
             piece.AddMoves();
@@ -120,7 +123,11 @@ namespace Xadrez.Chess
             else
                 return Color.White;
         }
-
+        /// <summary>
+        /// Retorna um Rei de uma determinada Cor da lista de Peças no Jogo.
+        /// </summary>
+        /// <param name="color"></param>
+        /// <returns></returns>
         private Piece King(Color color)
         {
             foreach (Piece king in PiecesInGame(color))
@@ -128,7 +135,11 @@ namespace Xadrez.Chess
                     return king;
             return null;
         }
-
+        /// <summary>
+        /// Verifica se o rei de uma determinada Cor está em situação de xeque.
+        /// </summary>
+        /// <param name="color"></param>
+        /// <returns></returns>
         public bool PlayerInXeque(Color color)
         {
             Piece king = King(color);
@@ -141,6 +152,37 @@ namespace Xadrez.Chess
                     return true;
             }
             return false;
+        }
+        /// <summary>
+        /// Verifique se o jogador de uma determinada Cor não levou um xeque mate
+        /// </summary>
+        /// <param name="color"></param>
+        /// <returns></returns>
+        public bool PlayerInXequeMate(Color color)
+        {
+            if (!PlayerInXeque(color))
+                return false;
+            foreach (Piece piece in PiecesInGame(color))
+            {
+                bool[,] matrix = piece.PossibleMoves();
+                for (int i = 0; i < Board.Lines; i++)
+                {
+                    for (int j = 0; j < Board.Columns; j++)
+                    {
+                        if (matrix[i, j])
+                        {
+                            Position positionStart = piece.Position;
+                            Position positionTest = new Position(i, j);
+                            Piece pieceCathed = ExecuteMovePiece(positionStart, positionTest);
+                            bool playerInXeque = PlayerInXeque(color);
+                            RollbackMovePiece(positionStart, positionTest, pieceCathed);
+                            if (!playerInXeque)
+                                return false;
+                        }
+                    }
+                }
+            }
+            return true;
         }
         public void ValidPositionStart(Position position)
         {
@@ -218,20 +260,22 @@ namespace Xadrez.Chess
             //AddNewPiece(new Pawn(Board, Color.White), 'h', 2);
             #endregion
             #region Peças Debug
+
+            AddNewPiece(new Tower(Board, Color.White), 'c', 1);
+            AddNewPiece(new King(Board, Color.White), 'd', 1);
+            AddNewPiece(new Tower(Board, Color.White), 'e', 1);
             AddNewPiece(new Tower(Board, Color.White), 'c', 2);
             AddNewPiece(new Tower(Board, Color.White), 'd', 2);
             AddNewPiece(new Tower(Board, Color.White), 'e', 2);
+
+            AddNewPiece(new Tower(Board, Color.Black), 'c', 8);
+            AddNewPiece(new King(Board, Color.Black), 'd', 8);
+            AddNewPiece(new Tower(Board, Color.Black), 'e', 8);
             AddNewPiece(new Tower(Board, Color.Black), 'c', 7);
             AddNewPiece(new Tower(Board, Color.Black), 'd', 7);
             AddNewPiece(new Tower(Board, Color.Black), 'e', 7);
 
-            AddNewPiece(new Tower(Board, Color.Black), 'c', 8);
-            AddNewPiece(new Tower(Board, Color.Black), 'e', 8);
-            AddNewPiece(new Tower(Board, Color.White), 'c', 1);
-            AddNewPiece(new Tower(Board, Color.White), 'e', 1);
 
-            AddNewPiece(new King(Board, Color.White), 'd', 1);
-            AddNewPiece(new King(Board, Color.Black), 'd', 8);
             #endregion
         }
     }

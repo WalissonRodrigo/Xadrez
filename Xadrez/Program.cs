@@ -32,10 +32,10 @@ namespace Xadrez
 
                         Console.WriteLine();
                         Console.Write("Destino: ");
-                        Position end = Screen.ReadPositionChess().ToPosition();                        
+                        Position end = Screen.ReadPositionChess().ToPosition();
                         match.ValidPositionEnd(start, end);
 
-                        match.Move(start, end);
+                        match.PlayerValidTurn(start, end);
                     }
                     catch (BoardException e)
                     {
@@ -43,6 +43,8 @@ namespace Xadrez
                         Console.ReadLine();
                     }
                 }
+                Console.Clear();
+                Screen.PrintMatch(match);
             }
             catch (BoardException e)
             {
@@ -52,6 +54,7 @@ namespace Xadrez
             {
                 Console.WriteLine(e.Message);
             }
+            Console.WriteLine("\n");
         }
     }
 }
