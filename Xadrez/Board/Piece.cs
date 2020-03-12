@@ -27,6 +27,13 @@
         }
 
         /// <summary>
+        /// decrementa um contador de movimentos para esta peça instânciada
+        /// </summary>
+        public void RemoveMoves()
+        {
+            QtdMoves--;
+        }
+        /// <summary>
         /// Valida se existem movimentos possíveis para uma peça
         /// </summary>
         /// <returns></returns>
