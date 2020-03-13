@@ -81,6 +81,29 @@ namespace Xadrez.Chess
             if (pieceCathed != null)
                 PiecesCathed.Add(pieceCathed);
 
+            // #jogadaespecial roque
+            if (piece is King)
+            {
+                // #jogadaespecial roque pequeno
+                if (start.Column + 2 == end.Column)
+                {
+                    Position startTower = new Position(start.Line, start.Column + 3);
+                    Position endTower = new Position(start.Line, start.Column + 1);
+                    Piece tower = Board.RemovePiece(startTower);
+                    tower.AddMoves();
+                    Board.AddPiece(tower, endTower);
+                }
+                // #jogadaespecial roque grande
+                if (start.Column - 2 == end.Column)
+                {
+                    Position startTower = new Position(start.Line, start.Column - 4);
+                    Position endTower = new Position(start.Line, start.Column - 1);
+                    Piece tower = Board.RemovePiece(startTower);
+                    tower.AddMoves();
+                    Board.AddPiece(tower, endTower);
+                }
+            }
+
             // #jogadaespecial en passant
             if (piece is Pawn)
             {
@@ -119,6 +142,29 @@ namespace Xadrez.Chess
                 PiecesCathed.Remove(pieceCathed);
             }
             Board.AddPiece(piece, start);
+
+            // #jogadaespecial roque
+            if (piece is King)
+            {
+                // #jogadaespecial roque pequeno
+                if (start.Column + 2 == end.Column)
+                {
+                    Position startTower = new Position(start.Line, start.Column + 3);
+                    Position endTower = new Position(start.Line, start.Column + 1);
+                    Piece tower = Board.RemovePiece(endTower);
+                    tower.RemoveMoves();
+                    Board.AddPiece(tower, startTower);
+                }
+                // #jogadaespecial roque grande
+                if (start.Column - 2 == end.Column)
+                {
+                    Position startTower = new Position(start.Line, start.Column - 4);
+                    Position endTower = new Position(start.Line, start.Column - 1);
+                    Piece tower = Board.RemovePiece(endTower);
+                    tower.RemoveMoves();
+                    Board.AddPiece(tower, startTower);
+                }
+            }
 
             // #jogadaespecial en passant
             if (piece is Pawn)
@@ -294,11 +340,11 @@ namespace Xadrez.Chess
             AddNewPiece(new Bishop(Board, Color.White), 'c', 1);
             AddNewPiece(new Bishop(Board, Color.White), 'f', 1);
 
-            AddNewPiece(new Queen(Board, Color.Black), 'e', 8);
-            AddNewPiece(new Queen(Board, Color.White), 'e', 1);
+            AddNewPiece(new King(Board, Color.Black, this), 'e', 8);
+            AddNewPiece(new King(Board, Color.White, this), 'e', 1);
 
-            AddNewPiece(new King(Board, Color.White), 'd', 1);
-            AddNewPiece(new King(Board, Color.Black), 'd', 8);
+            AddNewPiece(new Queen(Board, Color.Black), 'd', 8);
+            AddNewPiece(new Queen(Board, Color.White), 'd', 1);
 
             AddNewPiece(new Pawn(Board, Color.Black, this), 'a', 7);
             AddNewPiece(new Pawn(Board, Color.Black, this), 'b', 7);
@@ -317,21 +363,6 @@ namespace Xadrez.Chess
             AddNewPiece(new Pawn(Board, Color.White, this), 'f', 2);
             AddNewPiece(new Pawn(Board, Color.White, this), 'g', 2);
             AddNewPiece(new Pawn(Board, Color.White, this), 'h', 2);
-            #endregion
-            #region Peças Debug
-            //AddNewPiece(new Tower(Board, Color.White), 'c', 1);
-            //AddNewPiece(new King(Board, Color.White), 'd', 1);
-            //AddNewPiece(new Tower(Board, Color.White), 'e', 1);
-            //AddNewPiece(new Tower(Board, Color.White), 'c', 2);
-            //AddNewPiece(new Tower(Board, Color.White), 'd', 2);
-            //AddNewPiece(new Tower(Board, Color.White), 'e', 2);
-
-            //AddNewPiece(new Tower(Board, Color.Black), 'c', 8);
-            //AddNewPiece(new King(Board, Color.Black), 'd', 8);
-            //AddNewPiece(new Tower(Board, Color.Black), 'e', 8);
-            //AddNewPiece(new Tower(Board, Color.Black), 'c', 7);
-            //AddNewPiece(new Tower(Board, Color.Black), 'd', 7);
-            //AddNewPiece(new Tower(Board, Color.Black), 'e', 7);
             #endregion
         }
     }
