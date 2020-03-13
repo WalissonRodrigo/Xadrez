@@ -59,13 +59,9 @@ namespace Xadrez.Chess
 
             // #jogadaespecial en passant
             if (piece is Pawn && (end.Line == start.Line - 2 || end.Line == start.Line + 2))
-            {
                 VulnerableEnPassant = piece;
-            }
             else
-            {
                 VulnerableEnPassant = null;
-            }
         }
         /// <summary>
         /// Recebe a posição de inicial e final a ser movimentada
@@ -111,13 +107,9 @@ namespace Xadrez.Chess
                 {
                     Position posP;
                     if (piece.Color == Color.White)
-                    {
                         posP = new Position(end.Line + 1, end.Column);
-                    }
                     else
-                    {
                         posP = new Position(end.Line - 1, end.Column);
-                    }
                     pieceCathed = Board.RemovePiece(posP);
                     PiecesCathed.Add(pieceCathed);
                 }
@@ -174,13 +166,9 @@ namespace Xadrez.Chess
                     Piece pawn = Board.RemovePiece(end);
                     Position posP;
                     if (piece.Color == Color.White)
-                    {
                         posP = new Position(3, end.Column);
-                    }
                     else
-                    {
                         posP = new Position(4, end.Column);
-                    }
                     Board.AddPiece(pawn, posP);
                 }
             }
@@ -229,10 +217,8 @@ namespace Xadrez.Chess
         private Piece King(Color color)
         {
             foreach (Piece king in PiecesInGame(color))
-            {
                 if (king is King)
                     return king;
-            }
             return null;
         }
         /// <summary>
@@ -279,9 +265,7 @@ namespace Xadrez.Chess
                             bool playerInXeque = PlayerInXeque(color);
                             RollbackMovePiece(positionStart, positionEnd, pieceCathed);
                             if (!playerInXeque)
-                            {
                                 return false;
-                            }
                         }
                     }
                 }
