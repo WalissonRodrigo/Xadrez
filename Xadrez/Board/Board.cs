@@ -41,9 +41,9 @@
         public Piece Piece(Position position)
         {
             if (!PositionValidate(position))
-                throw new BoardException("Posição escolhida não existe! Use as opções presentes na tela. Respeite o limite de linhas e colunas.");
-
-            return pieces[position.Line, position.Column];
+                return null;
+            else
+                return pieces[position.Line, position.Column];
         }
 
         /// <summary>
