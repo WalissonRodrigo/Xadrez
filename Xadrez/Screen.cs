@@ -30,7 +30,7 @@ namespace Xadrez
             }
             else
             {
-                Console.WriteLine("XEQUEMATE!");
+                Console.WriteLine("XEQUE-MATE!");
                 Console.WriteLine($"Vencedor: {match.CurrentPlayer.ToFriendlyString()}");
             }
         }
@@ -116,10 +116,17 @@ namespace Xadrez
         /// <returns></returns>
         public static PositionChess ReadPositionChess()
         {
-            string pos = Console.ReadLine();
-            char column = pos[0];
-            int line = int.Parse(pos[1].ToString());
-            return new PositionChess(column, line);
+            try
+            {
+                string pos = Console.ReadLine();
+                char column = pos[0];
+                int line = int.Parse(pos[1].ToString());
+                return new PositionChess(column, line);
+            }
+            catch
+            {
+                return new PositionChess('a', -1);
+            }
         }
         /// <summary>
         /// Imprime uma peça no terminal exibindo a mesma.

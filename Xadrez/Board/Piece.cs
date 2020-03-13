@@ -1,4 +1,6 @@
-﻿namespace Xadrez.Board
+﻿using System;
+
+namespace Xadrez.Board
 {
     /// <summary>
     /// Peça do Tabuleiro.
@@ -53,9 +55,17 @@
             return false;
         }
 
-        public bool CanMoveTo(Position position)
+        public bool CanPossibleMoveTo(Position position)
         {
-            return PossibleMoves()[position.Line, position.Column];
+            try
+            {
+                return PossibleMoves()[position.Line, position.Column];
+            }
+            catch (IndexOutOfRangeException ex)
+            {
+                //Console.WriteLine(ex.Message);
+                throw new BoardException("Posição escolhida não existe! Use as opções presentes na tela. Respeite o limite de linhas e colunas.");
+            }
         }
 
         /// <summary>

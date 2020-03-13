@@ -42,6 +42,11 @@ namespace Xadrez
                         Console.WriteLine(e.Message);
                         Console.ReadLine();
                     }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e.Message);
+                        Console.ReadLine();
+                    }
                 }
                 Console.Clear();
                 Screen.PrintMatch(match);
@@ -49,6 +54,10 @@ namespace Xadrez
             catch (BoardException e)
             {
                 Console.WriteLine(e.Message);
+            }
+            catch (IndexOutOfRangeException e)
+            {
+                Console.WriteLine(e);
             }
             catch (Exception e)
             {

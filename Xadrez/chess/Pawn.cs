@@ -4,19 +4,26 @@ namespace Xadrez.Chess
 {
     public class Pawn : Piece
     {
+        private ChessMatch ChessMatch;
+
         /// <summary>
         /// Peça Peão. Pode mover sempre para frente. 
         /// Na saída pode andar duas casas mas após o primeiro movimento pode mover uma casa por turno. 
         /// Possui Jogadas especiais como Roque, Empasante.
         /// </summary>
-        public Pawn(Board.Board board, Color color) : base(color, board)
+        public Pawn(Board.Board board, Color color, ChessMatch chessMatch) : base(color, board)
         {
-
+            ChessMatch = chessMatch;
         }
-        private bool CanMove(Position position)
+
+        private bool Empty(Position position)
+        {
+            return Board.Piece(position) == null;
+        }
+        private bool HaveEnemy(Position position)
         {
             Piece p = Board.Piece(position);
-            return p == null || p.Color != Color;
+            return p != null && p.Color != Color;
         }
 
         public override bool[,] PossibleMoves()
@@ -24,30 +31,83 @@ namespace Xadrez.Chess
             bool[,] matrix = new bool[Board.Lines, Board.Columns];
             Position pos = new Position(0, 0);
             Piece piece = Board.Piece(Position);
-            if (piece.QtdMoves == 0)
-            {
-                //up + 2
-                pos.DefineValue(Position.Line - 2, Position.Column);
-                if (Board.PositionValidate(pos) && CanMove(pos))
-                    matrix[pos.Line, pos.Column] = true;
-                //down + 2
-                pos.DefineValue(Position.Line + 2, Position.Column);
-                if (Board.PositionValidate(pos) && CanMove(pos))
-                    matrix[pos.Line, pos.Column] = true;
-            }
-            //down
-            if (piece.Color == Color.Black)
-            {
-                pos.DefineValue(Position.Line + 1, Position.Column);
-                if (Board.PositionValidate(pos) && CanMove(pos))
-                    matrix[pos.Line, pos.Column] = true;
-            }
-            //up
-            if (piece.Color == Color.White)
+            if (Color == Color.White)
             {
                 pos.DefineValue(Position.Line - 1, Position.Column);
-                if (Board.PositionValidate(pos) && CanMove(pos))
+                if (Board.PositionValidate(pos) && Empty(pos))
+                {
                     matrix[pos.Line, pos.Column] = true;
+                }
+                pos.DefineValue(Position.Line - 2, Position.Column);
+                Position p2 = new Position(Position.Line - 1, Position.Column);
+                if (Board.PositionValidate(p2) && Empty(p2) && Board.PositionValidate(pos) && Empty(pos) && QtdMoves == 0)
+                {
+                    matrix[pos.Line, pos.Column] = true;
+                }
+                pos.DefineValue(Position.Line - 1, Position.Column - 1);
+                if (Board.PositionValidate(pos) && HaveEnemy(pos))
+                {
+                    matrix[pos.Line, pos.Column] = true;
+                }
+                pos.DefineValue(Position.Line - 1, Position.Column + 1);
+                if (Board.PositionValidate(pos) && HaveEnemy(pos))
+                {
+                    matrix[pos.Line, pos.Column] = true;
+                }
+
+                // #jogadaespecial en passant
+                if (Position.Line == 3)
+                {
+                    Position esquerda = new Position(Position.Line, Position.Column - 1);
+                    if (Board.PositionValidate(esquerda) && HaveEnemy(esquerda) && Board.Piece(esquerda) == ChessMatch.VulnerableEnPassant)
+                    {
+                        matrix[esquerda.Line - 1, esquerda.Column] = true;
+                    }
+                    Position direita = new Position(Position.Line, Position.Column + 1);
+                    if (Board.PositionValidate(direita) && HaveEnemy(direita) && Board.Piece(direita) == ChessMatch.VulnerableEnPassant)
+                    {
+                        matrix[direita.Line - 1, direita.Column] = true;
+                    }
+                }
+            }
+            else
+            {
+                pos.DefineValue(Position.Line + 1, Position.Column);
+                if (Board.PositionValidate(pos) && Empty(pos))
+                {
+                    matrix[pos.Line, pos.Column] = true;
+                }
+                pos.DefineValue(Position.Line + 2, Position.Column);
+                Position p2 = new Position(Position.Line + 1, Position.Column);
+                if (Board.PositionValidate(p2) && Empty(p2) && Board.PositionValidate(pos) && Empty(pos) && QtdMoves == 0)
+                {
+                    matrix[pos.Line, pos.Column] = true;
+                }
+                pos.DefineValue(Position.Line + 1, Position.Column - 1);
+                if (Board.PositionValidate(pos) && HaveEnemy(pos))
+                {
+                    matrix[pos.Line, pos.Column] = true;
+                }
+                pos.DefineValue(Position.Line + 1, Position.Column + 1);
+                if (Board.PositionValidate(pos) && HaveEnemy(pos))
+                {
+                    matrix[pos.Line, pos.Column] = true;
+                }
+
+                // #jogadaespecial en passant
+                if (Position.Line == 4)
+                {
+                    Position esquerda = new Position(Position.Line, Position.Column - 1);
+                    if (Board.PositionValidate(esquerda) && HaveEnemy(esquerda) && Board.Piece(esquerda) == ChessMatch.VulnerableEnPassant)
+                    {
+                        matrix[esquerda.Line + 1, esquerda.Column] = true;
+                    }
+                    Position direita = new Position(Position.Line, Position.Column + 1);
+                    if (Board.PositionValidate(direita) && HaveEnemy(direita) && Board.Piece(direita) == ChessMatch.VulnerableEnPassant)
+                    {
+                        matrix[direita.Line + 1, direita.Column] = true;
+                    }
+                }
             }
             return matrix;
         }
