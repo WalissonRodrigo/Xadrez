@@ -46,7 +46,18 @@ namespace Xadrez.Chess
                 throw new BoardException("Você não pode se colocar em xeque!");
             }
             Piece piece = Board.Piece(end);
-
+            // #jogadaespecial promocao
+            if (piece is Pawn)
+            {
+                if ((piece.Color == Color.White && end.Line == 0) || (piece.Color == Color.Black && end.Line == 7))
+                {
+                    piece = Board.RemovePiece(end);
+                    Pieces.Remove(piece);
+                    Piece queen = new Queen(Board, piece.Color);
+                    Board.AddPiece(queen, end);
+                    Pieces.Add(queen);
+                }
+            }
             if (PlayerInXeque(ColorEnemy(CurrentPlayer)))
                 Xeque = true;
             else

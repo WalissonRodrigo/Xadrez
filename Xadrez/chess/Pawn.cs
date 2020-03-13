@@ -30,7 +30,7 @@ namespace Xadrez.Chess
         {
             bool[,] matrix = new bool[Board.Lines, Board.Columns];
             Position pos = new Position(0, 0);
-            Piece piece = Board.Piece(Position);
+            
             if (Color == Color.White)
             {
                 pos.DefineValue(Position.Line - 1, Position.Column);
